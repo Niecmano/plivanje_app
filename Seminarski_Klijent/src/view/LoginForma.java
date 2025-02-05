@@ -123,7 +123,7 @@ public class LoginForma extends javax.swing.JFrame {
             GlavnaForma gf = new GlavnaForma();
             gf.setVisible(true);
         }
-        else if(brPokusaja>3){
+        else if(brPokusaja>2){
             JOptionPane.showMessageDialog(this, "Nemate vise pokusaja", "Greska", JOptionPane.ERROR_MESSAGE);
             System.exit(0);
         

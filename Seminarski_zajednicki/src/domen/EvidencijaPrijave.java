@@ -40,6 +40,14 @@ public class EvidencijaPrijave extends OpstiDomenskiObjekat{
         this.tak = tak;
         this.klub = klub;
     }
+    
+    public EvidencijaPrijave(Long idPrijave, Date datumEvid, Takmicenje tak, PlivackiKlub klub, int brNastupa) {
+        this.idPrijave = idPrijave;
+        this.brNastupa = brNastupa;
+        this.datumEvid = datumEvid;
+        this.tak = tak;
+        this.klub = klub;
+    }
 
     public Long getIdPrijave() {
         return idPrijave;
@@ -127,7 +135,8 @@ public class EvidencijaPrijave extends OpstiDomenskiObjekat{
                 Mesto m = new Mesto(rs.getLong("m.idMesto"), rs.getString("m.nazivMesta"));
                 PlivackiKlub kl = new PlivackiKlub(rs.getLong("pk.idPlivackiKlub"), 
                         rs.getString("pk.nazivPK"), rs.getInt("pk.brojPlivaca"), rs.getInt("pk.brojTrenera"), m);
-                ep.add(new EvidencijaPrijave(rs.getLong("ep.idPrijava"), rs.getDate("ep.datumEvid"),te, kl));
+                ep.add(new EvidencijaPrijave(rs.getLong("ep.idPrijava"), rs.getDate("ep.datumEvid"),
+                        te, kl, rs.getInt("ep.brNastupa")));
             }
         } catch (SQLException ex) {
             System.out.println(ex);

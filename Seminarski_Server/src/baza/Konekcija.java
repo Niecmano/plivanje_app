@@ -14,6 +14,7 @@ public class Konekcija {
     private Konekcija(){
         try {
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/psseminarski","root","");
+            conn.setAutoCommit(false);
         } catch (SQLException ex) {
             System.out.println(ex);
         }

@@ -15,7 +15,7 @@ import java.text.SimpleDateFormat;
  */
 public class ModelTabelePrijave extends AbstractTableModel {
     private List<EvidencijaPrijave> prijave;
-    private String[] kolone = {"id","klub","takmicenje","datum evidencije"};
+    private String[] kolone = {"klub","takmicenje","broj nastupa","datum evidencije"};
 
     public ModelTabelePrijave(List<EvidencijaPrijave> prijave) {
         this.prijave = prijave;
@@ -36,11 +36,11 @@ public class ModelTabelePrijave extends AbstractTableModel {
         EvidencijaPrijave ep = prijave.get(rowIndex);
         switch (columnIndex) {
             case 0:
-                return ep.getIdPrijave();
-            case 1:
                 return ep.getKlub();
-            case 2:
+            case 1:
                 return ep.getTak();
+            case 2:
+                return ep.getBrNastupa();
             case 3:
                 SimpleDateFormat sablon = new SimpleDateFormat("dd.MM.yyyy");
                 return sablon.format(ep.getDatumEvid());

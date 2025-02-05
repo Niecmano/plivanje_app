@@ -11,6 +11,7 @@ import java.net.Socket;
 import komun.*;
 import domen.*;
 import java.util.List;
+import so.*;
 
 /**
  *
@@ -26,7 +27,7 @@ public class Server {
     }
 
     public static void main(String[] args) {
-        dbb = new DBBroker();
+        dbb = DBBroker.getInstance();
         try {
             ServerSocket srvskt = new ServerSocket(4050);
             skt = srvskt.accept();
@@ -36,18 +37,11 @@ public class Server {
                 Zahtev req = (Zahtev) rcv.primi();
                 Odgovor o;
                 switch (req.getOp()) {
-                    case PRIJAVA:
-                        try {
-                            List<Organizator> odg = dbb.prijava((Organizator) req.getArgum());
-                            o = new Odgovor(odg, null);
-                        } catch (Exception e) {
-                            o = new Odgovor(null, e);
-                        }
-                        break;
                     case VRATI_TAKMICENJA:
                         try {
-//                            List<Takmicenje> odg = dbb.vratiTakmicenja();
-                            List<OpstiDomenskiObjekat> odg = dbb.select(new Takmicenje(),false);
+                            SOVratiListuTakmicenja so = new SOVratiListuTakmicenja();
+                            so.sablonIzvrsavanja(new Takmicenje(),false);
+                            List<Takmicenje> odg = so.getTaks();
                             o = new Odgovor(odg, null);
                         } catch (Exception e) {
                             o = new Odgovor(null, e);
@@ -55,8 +49,8 @@ public class Server {
                         break;
                     case IZBRISI_TAKMICENJE:
                         try {
-//                            dbb.brisiTakmicenje((Takmicenje) req.getArgum());
-                            dbb.delete((Takmicenje) req.getArgum());
+                            SOIzbrisiTakmicenje so = new SOIzbrisiTakmicenje();
+                            so.sablonIzvrsavanja((Takmicenje) req.getArgum(), null);
                             o = new Odgovor(null, null);
                         } catch (Exception e) {
                             o = new Odgovor(null, e);
@@ -64,9 +58,8 @@ public class Server {
                         break;
                     case DODAJ_TAKMICENJE:
                         try {
-                            dbb.insert((Takmicenje) req.getArgum());
-//                            dbb.dodajTakmicenjeUBazu((Takmicenje) req.getArgum());
-
+                            SODodajTakmicenje so = new SODodajTakmicenje();
+                            so.sablonIzvrsavanja((Takmicenje) req.getArgum(), null);
                         } catch (Exception e) {
                             System.out.println(e);
                         }
@@ -74,9 +67,8 @@ public class Server {
                         break;
                     case IZMENI_TAKMICENJE:
                         try {
-//                            dbb.izmeniTakmicenjeUBazi(t);
-                            Takmicenje t = (Takmicenje) req.getArgum();
-                            dbb.update(new Takmicenje(t.getIdTakmicenja(),t.getNazivTakm()));
+                            SOPromeniTakmicenje so = new SOPromeniTakmicenje();
+                            so.sablonIzvrsavanja((Takmicenje) req.getArgum(), null);
                             o = new Odgovor(null, null);
                         } catch (Exception e) {
                             o = new Odgovor(null, e);
@@ -84,8 +76,9 @@ public class Server {
                         break;
                     case VRATI_MESTA:
                         try {
-//                            List<Mesto> odg = dbb.vratiMestaIzBaze();
-                            List<OpstiDomenskiObjekat> odg = dbb.select(new Mesto(),false);
+                            SOVratiListuMesta so = new SOVratiListuMesta();
+                            so.sablonIzvrsavanja(new Mesto(),false);
+                            List<Mesto> odg = so.getMesta();
                             o = new Odgovor(odg, null);
                         } catch (Exception e) {
                             o = new Odgovor(null, e);
@@ -93,98 +86,182 @@ public class Server {
                         break;
                     case VRATI_KLUBOVE:
                         try {
-//                            List<PlivackiKlub> odg = dbb.vratiKluboveIzBaze();
-                            List<OpstiDomenskiObjekat> odg = dbb.select(new PlivackiKlub(),false);
+                            SOVratiListuPK so = new SOVratiListuPK();
+                            so.sablonIzvrsavanja(new PlivackiKlub(),false);
+                            List<PlivackiKlub> odg = so.getKlubovi();
                             o = new Odgovor(odg, null);
                         } catch (Exception e) {
                             o = new Odgovor(null, e);
                         }
                         break;
                     case IZBRISI_KLUBOVE:
-                        dbb.delete(new PlivackiKlub((Long) req.getArgum()));
-//                        dbb.izbrisiKlubIzBaze((Long) req.getArgum());
+                        try {
+                            SOIzbrisiPK so = new SOIzbrisiPK();
+                            so.sablonIzvrsavanja(new PlivackiKlub((Long) req.getArgum()), null);
+                        } catch (Exception ex) {
+                            System.out.println(ex);
+                        }
                         o = new Odgovor(null, null);
                         break;
                     case DODAJ_KLUBOVE:
-                        dbb.insert((PlivackiKlub) req.getArgum());
-//                        dbb.dodajPKuBazu((PlivackiKlub) req.getArgum());
+                        try {
+                            SODodajPK so = new SODodajPK();
+                            so.sablonIzvrsavanja((PlivackiKlub)req.getArgum(), null);
+                        } catch (Exception ex) {
+                            System.out.println(ex);
+                        }
                         o = new Odgovor(null, null);
                         break;
+
                     case IZMENI_KLUBOVE:
-                        PlivackiKlub pk = (PlivackiKlub) req.getArgum();
-                        dbb.update(pk);
-//                        dbb.izmeniKlubUBazi((PlivackiKlub) req.getArgum());
+                        try {
+                            SOPromeniPK so = new SOPromeniPK();
+                            so.sablonIzvrsavanja((PlivackiKlub)req.getArgum(), null);
+                        } catch (Exception ex) {
+                            System.out.println(ex);
+                        }
                         o = new Odgovor(null, null);
                         break;
                     case FILTER_KLUBOVE:
-                        Object[] filts = (Object[]) req.getArgum();
-                        o = new Odgovor(dbb.select(new PlivackiKlub((String)filts[0], (Mesto) filts[1]), true), null);
-//                        o = new Odgovor(dbb.filtriranjeKlubova((String)filts[0], (Mesto) filts[1]), null);
+                        try {
+                            Object[] filts = (Object[]) req.getArgum();
+                            SOVratiListuPK so = new SOVratiListuPK();
+                            so.sablonIzvrsavanja(new PlivackiKlub((String)filts[0], (Mesto) filts[1]), true);
+                            o = new Odgovor(so.getKlubovi(), null);
+                        } catch (Exception ex) {
+                            System.out.println(ex);
+                            o = new Odgovor(null, ex);
+                        }
                         break;
+
                     case VRATI_TAKMICARE:
                         try {
-                            List<OpstiDomenskiObjekat> taks = dbb.select
-                                (new Takmicar((PlivackiKlub) req.getArgum()),false);
-//                            List<Takmicar> taks = dbb.vratiTakmPK((PlivackiKlub) req.getArgum());
-                            o = new Odgovor(taks, null);
+                            SOVratiListuTakmicara so = new SOVratiListuTakmicara();
+                            so.izvrsavanje(new Takmicar((PlivackiKlub)req.getArgum()), false);
+                            o = new Odgovor(so.getTaks(), null);
                         } catch (Exception e) {
                             o = new Odgovor(null, e);
                         }
                         break;
                     case DODAJ_TAKMICARA:
-                        dbb.insert((Takmicar) req.getArgum());
-//                        dbb.dodajTakmicara((Takmicar) req.getArgum());
+                        try {
+                            SODodajTakmicara so = new SODodajTakmicara();
+                            so.sablonIzvrsavanja((Takmicar) req.getArgum(), null);
+                        } catch (Exception e) {
+                            System.out.println(e);
+                        }
                         o = new Odgovor(null, null);
-                        break;
+                        break;  
                     case IZMENI_TAKMICARA:
-                        dbb.update((Takmicar) req.getArgum());
-//                        dbb.izmeniTakm((Takmicar) req.getArgum());
+                        try {
+                            SOPromeniTakmicara so = new SOPromeniTakmicara();
+                            so.sablonIzvrsavanja((Takmicar) req.getArgum(), null);
+                        } catch (Exception e) {
+                            System.out.println(e);
+                        }
                         o = new Odgovor(null, null);
-                        break;
+                        break;  
                     case IZBRISI_TAKMICARA:
-                        dbb.delete(new Takmicar((Long) req.getArgum()));
-//                        dbb.izbrisiTakmUBazi((Long) req.getArgum());
+                        try {
+                            SOIzbrisiTakmicara so = new SOIzbrisiTakmicara();
+                            so.sablonIzvrsavanja(new Takmicar((Long) req.getArgum()), null);
+                        } catch (Exception e) {
+                            System.out.println(e);
+                        }
                         o = new Odgovor(null, null);
-                        break;
+                        break;  
                     case VRATI_PRIJAVE:
-//                        o = new Odgovor(dbb.vratiPrijaveIzBaze(), null);
-                        o = new Odgovor(dbb.select(new EvidencijaPrijave(),false), null);
+                        try {
+                            SOVratiListuEvidencijaPrijave so = new SOVratiListuEvidencijaPrijave();
+                            so.sablonIzvrsavanja(new EvidencijaPrijave(),false);
+                            o = new Odgovor(so.getPrijave(), null);  
+                        } catch (Exception e) {
+                            o = new Odgovor(null, e); 
+                        }
                         break;
                     case IZBRISI_PRIJAVU:
-                        dbb.delete(new EvidencijaPrijave((Long)req.getArgum()));
-//                        dbb.izbrisiPrijavuIzBaze((Long)req.getArgum());
-                        o = new Odgovor(null, null);
+                        try {
+                            SOIzbrisiEvidencijuPrijave so = new SOIzbrisiEvidencijuPrijave();
+                            so.sablonIzvrsavanja(new EvidencijaPrijave((Long)req.getArgum()),null);
+                            o = new Odgovor(null, null);  
+                        } catch (Exception e) {
+                            o = new Odgovor(null, e); 
+                        }
                         break;
                     case IZMENI_PRIJAVU:
-                        dbb.update((EvidencijaPrijave) req.getArgum());
-                        o = new Odgovor(null, null);
+                        try {
+                            SOPromeniEvidencijuPrijave so = new SOPromeniEvidencijuPrijave();
+                            so.sablonIzvrsavanja((EvidencijaPrijave)req.getArgum(),null);
+                            o = new Odgovor(null, null);  
+                        } catch (Exception e) {
+                            o = new Odgovor(null, e); 
+                        }
                         break;
                     case FILTER_PRIJAVE:
-                        filts = (Object[]) req.getArgum();
-                        o = new Odgovor(dbb.select(new EvidencijaPrijave((PlivackiKlub)filts[0], (Takmicenje) filts[1]),true), null);
-//                        o = new Odgovor(dbb.filtriranjePrijava((PlivackiKlub)filts[0], (Takmicenje) filts[1]), null);
+                        try {
+                            Object[] filts = (Object[]) req.getArgum();
+                            SOVratiListuEvidencijaPrijave so = new SOVratiListuEvidencijaPrijave();
+                            so.sablonIzvrsavanja(new EvidencijaPrijave((PlivackiKlub)filts[0], 
+                                (Takmicenje) filts[1]),true);
+                            o = new Odgovor(so.getPrijave(), null);  
+                        } catch (Exception e) {
+                            o = new Odgovor(null, e); 
+                        }
                         break;
                     case DODAJ_PRIJAVU:
-                        dbb.insert((EvidencijaPrijave) req.getArgum());
-//                        dbb.dodajPrijavu((EvidencijaPrijave) req.getArgum());
-                        o = new Odgovor(null, null);
+                        try {
+                            SODodajEvidencijuPrijave so = new SODodajEvidencijuPrijave();
+                            so.sablonIzvrsavanja((EvidencijaPrijave)req.getArgum(),null);
+                            o = new Odgovor(null, null);  
+                        } catch (Exception e) {
+                            o = new Odgovor(null, e); 
+                        }
                         break;
                     case VRATI_STAVKE:
-                        StavkaEvidencijePrijave sep = new StavkaEvidencijePrijave((EvidencijaPrijave)req.getArgum());
-                        o=new Odgovor(dbb.select(sep,false), null);
-//                        o = new Odgovor(dbb.vratiStavke((EvidencijaPrijave)req.getArgum()), null);
+                        try {
+                            SOVratiListuStavkuEvidencije so = new SOVratiListuStavkuEvidencije();
+                            so.sablonIzvrsavanja(new StavkaEvidencijePrijave((EvidencijaPrijave) 
+                                    req.getArgum()),false);
+                            o = new Odgovor(so.getStavke(), null);  
+                        } catch (Exception e) {
+                            o = new Odgovor(null, e); 
+                        }
                         break;
                     case IZBRISI_STAVKU:
-                        dbb.delete((StavkaEvidencijePrijave)req.getArgum());
-                        o = new Odgovor(null, null);
+                        try {
+                            SOIzbrisiStavkuEvidencije so = new SOIzbrisiStavkuEvidencije();
+                            so.sablonIzvrsavanja((StavkaEvidencijePrijave)req.getArgum(),null);
+                            o = new Odgovor(null, null);  
+                        } catch (Exception e) {
+                            o = new Odgovor(null, e); 
+                        }
                         break;
                     case DODAJ_STAVKU:
-                        dbb.insert((StavkaEvidencijePrijave) req.getArgum());
-                        o = new Odgovor(null, null);
+                        try {
+                            SODodajStavkuEvidencije so = new SODodajStavkuEvidencije();
+                            so.sablonIzvrsavanja((StavkaEvidencijePrijave)req.getArgum(),null);
+                            o = new Odgovor(null, null);  
+                        } catch (Exception e) {
+                            o = new Odgovor(null, e); 
+                        }
                         break;
                     case IZMENI_STAVKU:
-                        dbb.update((StavkaEvidencijePrijave) req.getArgum());
-                        o = new Odgovor(null, null);
+                        try {
+                            SOPromeniStavkuEvidencije so = new SOPromeniStavkuEvidencije();
+                            so.sablonIzvrsavanja((StavkaEvidencijePrijave)req.getArgum(),null);
+                            o = new Odgovor(null, null);  
+                        } catch (Exception e) {
+                            o = new Odgovor(null, e); 
+                        }
+                        break;
+                    case PRIJAVA:
+                        try {
+                            SOPrijavljivanje so = new SOPrijavljivanje();
+                            so.sablonIzvrsavanja((Organizator) req.getArgum(),false);
+                            o = new Odgovor(so.getOrgs(), null);
+                        } catch (Exception e) {
+                            o = new Odgovor(null, e);
+                        }
                         break;
                     default:
                         throw new RuntimeException("Operacija ne postoji");

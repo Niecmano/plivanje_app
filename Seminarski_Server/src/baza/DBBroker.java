@@ -7,7 +7,6 @@ package baza;
 import java.util.List;
 import domen.*;
 import java.sql.*;
-import java.util.LinkedList;
 
 /**
  *
@@ -16,9 +15,17 @@ import java.util.LinkedList;
 public class DBBroker {
 
     private static Connection conn;
-
-    public DBBroker() {
+    private static DBBroker dbb;
+    public static DBBroker getInstance(){
+        if(dbb==null) dbb = new DBBroker();
+        return dbb;
+    }
+    private DBBroker() {
         conn = Konekcija.getInstance().getConn();
+    }
+
+    public static Connection getConn() {
+        return conn;
     }
     
     public List<OpstiDomenskiObjekat> select(OpstiDomenskiObjekat opstiDO, boolean filter){
@@ -71,6 +78,8 @@ public class DBBroker {
             System.out.println(ex);
         }
     }
+}
+
 
 //    public List<PlivackiKlub> vratiKluboveIzBaze() {
 //        List<PlivackiKlub> klubovi = new LinkedList<>();
@@ -141,23 +150,23 @@ public class DBBroker {
 //        }
 //    }   
 
-    public List<Organizator> prijava(Organizator org) {
-        try {
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM organizator");
-            while(rs.next()){
-                if(rs.getString("username").equals(org.getUsername())
-                        && rs.getString("lozinka").equals(org.getLozinka())){
-                    List<Organizator> orgs = new LinkedList<>();
-                    orgs.add(org);
-                    return orgs;
-                }
-            }
-        } catch (SQLException ex) {
-            System.out.println(ex);
-        }
-        return null;
-    }
+//    public List<Organizator> prijava(Organizator org) {
+//        try {
+//            Statement st = conn.createStatement();
+//            ResultSet rs = st.executeQuery("SELECT * FROM organizator");
+//            while(rs.next()){
+//                if(rs.getString("username").equals(org.getUsername())
+//                        && rs.getString("lozinka").equals(org.getLozinka())){
+//                    List<Organizator> orgs = new LinkedList<>();
+//                    orgs.add(org);
+//                    return orgs;
+//                }
+//            }
+//        } catch (SQLException ex) {
+//            System.out.println(ex);
+//        }
+//        return null;
+//    }
     
 //    public List<PlivackiKlub> filtriranjeKlubova(String naziv, Mesto mesto) {
 //        List<PlivackiKlub> klubovi = new LinkedList<>();
@@ -385,4 +394,4 @@ public class DBBroker {
 //            System.out.println(ex);
 //        }
 //    }
-}
+

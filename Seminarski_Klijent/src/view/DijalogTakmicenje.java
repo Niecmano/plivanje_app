@@ -12,13 +12,13 @@ import domen.Takmicenje;
  *
  * @author Nemanja
  */
-public class DialogTakmicenje extends javax.swing.JDialog {
+public class DijalogTakmicenje extends javax.swing.JDialog {
     
     private Takmicenje t;
     /**
      * Creates new form DialogTakmicenje
      */
-    public DialogTakmicenje(Takmicenje t,java.awt.Frame parent, boolean modal) {
+    public DijalogTakmicenje(Takmicenje t,java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.t=t;

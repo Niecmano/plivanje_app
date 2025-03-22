@@ -7,7 +7,8 @@ package view;
 import java.util.List;
 import javax.swing.JOptionPane;
 import logika.Kontroler;
-import domen.Takmicenje;
+import domen.*;
+import tablemodels.ModelTabeleLokTakm;
 
 /**
  *
@@ -21,6 +22,9 @@ public class FormaTakmicenje extends javax.swing.JFrame {
     public FormaTakmicenje() {
         initComponents();
         popuniComboTakmicenja();
+        popuniComboSC();
+        ModelTabeleLokTakm mtlt = new ModelTabeleLokTakm(Kontroler.getInstance().vratiLokTakm());
+        jTable1.setModel(mtlt);
     }
 
     /**
@@ -39,13 +43,23 @@ public class FormaTakmicenje extends javax.swing.JFrame {
         btnIzmeni1 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         comboTakmicenje = new javax.swing.JComboBox<>();
+        comboSC = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
+        btnObrisiSC = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jLabel7 = new javax.swing.JLabel();
+        btnDodajLokaciju = new javax.swing.JButton();
+        btnDodajSC = new javax.swing.JButton();
+        btnIzmeniSC = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 202));
 
         jLabel3.setFont(new java.awt.Font("Segoe Print", 1, 24)); // NOI18N
-        jLabel3.setText("Takmičenja");
+        jLabel3.setText("Lokacije takmičenja");
 
         btnObrisi1.setBackground(new java.awt.Color(255, 204, 0));
         btnObrisi1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -79,44 +93,143 @@ public class FormaTakmicenje extends javax.swing.JFrame {
 
         comboTakmicenje.setToolTipText("");
 
+        comboSC.setToolTipText("");
+
+        jLabel5.setFont(new java.awt.Font("Segoe Print", 1, 24)); // NOI18N
+        jLabel5.setText("Sportski centri");
+
+        btnObrisiSC.setBackground(new java.awt.Color(255, 204, 0));
+        btnObrisiSC.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnObrisiSC.setText("Obriši SC");
+        btnObrisiSC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnObrisiSCActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 17)); // NOI18N
+        jLabel6.setText("Izaberite sportski centar:");
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        jLabel7.setFont(new java.awt.Font("Segoe Print", 1, 24)); // NOI18N
+        jLabel7.setText("Takmičenja");
+
+        btnDodajLokaciju.setBackground(new java.awt.Color(255, 204, 0));
+        btnDodajLokaciju.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnDodajLokaciju.setText("Dodaj lokaciju takmičenja");
+        btnDodajLokaciju.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDodajLokacijuActionPerformed(evt);
+            }
+        });
+
+        btnDodajSC.setBackground(new java.awt.Color(255, 204, 0));
+        btnDodajSC.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnDodajSC.setText("Dodaj SC");
+        btnDodajSC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDodajSCActionPerformed(evt);
+            }
+        });
+
+        btnIzmeniSC.setBackground(new java.awt.Color(255, 204, 0));
+        btnIzmeniSC.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnIzmeniSC.setText("Izmeni SC");
+        btnIzmeniSC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIzmeniSCActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(38, 38, 38)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
+                        .addComponent(jLabel4)
+                        .addGap(29, 29, 29)
+                        .addComponent(comboTakmicenje, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(comboTakmicenje, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jLabel6)
+                                .addGap(18, 18, 18)
+                                .addComponent(comboSC, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnIzmeni1)
+                            .addComponent(btnDodaj1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnObrisi1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(btnDodaj1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnObrisi1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnIzmeni1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGap(0, 25, Short.MAX_VALUE))))
+                                .addComponent(btnDodajSC, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnObrisiSC, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnIzmeniSC, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 101, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 499, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3)
+                            .addComponent(btnDodajLokaciju, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(53, 53, 53))))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(48, 48, 48)
+                    .addComponent(jLabel7)
+                    .addContainerGap(906, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addComponent(jLabel3)
-                .addGap(42, 42, 42)
+                .addGap(130, 130, 130)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(comboTakmicenje, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
-                .addComponent(btnObrisi1)
-                .addGap(33, 33, 33)
-                .addComponent(btnIzmeni1)
-                .addGap(33, 33, 33)
-                .addComponent(btnDodaj1)
-                .addGap(54, 54, 54))
+                .addGap(40, 40, 40)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(22, 22, 22)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnDodajLokaciju))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnObrisi1)
+                        .addGap(28, 28, 28)
+                        .addComponent(btnIzmeni1)
+                        .addGap(27, 27, 27)
+                        .addComponent(btnDodaj1)
+                        .addGap(68, 68, 68)
+                        .addComponent(jLabel5)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(comboSC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(btnObrisiSC)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnDodajSC)))
+                .addGap(18, 18, 18)
+                .addComponent(btnIzmeniSC)
+                .addContainerGap(91, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(49, 49, 49)
+                    .addComponent(jLabel7)
+                    .addContainerGap(619, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -139,11 +252,23 @@ public class FormaTakmicenje extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnIzmeni1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzmeni1ActionPerformed
+        DijalogTakmicenje dt = new DijalogTakmicenje((Takmicenje) comboTakmicenje.getSelectedItem(), this, true);
+        dt.setVisible(true);
+        popuniComboTakmicenja();
+    }//GEN-LAST:event_btnIzmeni1ActionPerformed
+
+    private void btnDodaj1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDodaj1ActionPerformed
+        DijalogTakmicenje dt = new DijalogTakmicenje(null, this, true);
+        dt.setVisible(true);
+        popuniComboTakmicenja();
+    }//GEN-LAST:event_btnDodaj1ActionPerformed
+
     private void btnObrisi1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrisi1ActionPerformed
         Takmicenje t = (Takmicenje) comboTakmicenje.getSelectedItem();
         int potvrda = JOptionPane.showConfirmDialog(this,
-                "Da li ste sigurni da želite da obrišete takmicenje: " + t + "?",
-                "Potvrda brisanja", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+            "Da li ste sigurni da želite da obrišete takmicenje: " + t + "?",
+            "Potvrda brisanja", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 
         if (potvrda != JOptionPane.YES_OPTION) {
             return;
@@ -152,17 +277,37 @@ public class FormaTakmicenje extends javax.swing.JFrame {
         popuniComboTakmicenja();
     }//GEN-LAST:event_btnObrisi1ActionPerformed
 
-    private void btnDodaj1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDodaj1ActionPerformed
-        DialogTakmicenje dt = new DialogTakmicenje(null, this, true);
-        dt.setVisible(true);
-        popuniComboTakmicenja();
-    }//GEN-LAST:event_btnDodaj1ActionPerformed
+    private void btnObrisiSCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrisiSCActionPerformed
+        SportskiCentar sc = (SportskiCentar) comboSC.getSelectedItem();
+        int potvrda = JOptionPane.showConfirmDialog(this,
+            "Da li ste sigurni da želite da obrišete sportski centar: " + sc + "?",
+            "Potvrda brisanja", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 
-    private void btnIzmeni1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzmeni1ActionPerformed
-        DialogTakmicenje dt = new DialogTakmicenje((Takmicenje) comboTakmicenje.getSelectedItem(), this, true);
-        dt.setVisible(true);
-        popuniComboTakmicenja();
-    }//GEN-LAST:event_btnIzmeni1ActionPerformed
+        if (potvrda != JOptionPane.YES_OPTION) {
+            return;
+        }
+        Kontroler.getInstance().izbrisiCentar(sc);
+        popuniComboSC();
+    }//GEN-LAST:event_btnObrisiSCActionPerformed
+
+    private void btnDodajLokacijuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDodajLokacijuActionPerformed
+        DijalogLokTakm dlt = new DijalogLokTakm(this, true);
+        dlt.setVisible(true);
+        ModelTabeleLokTakm mtlt = new ModelTabeleLokTakm(Kontroler.getInstance().vratiLokTakm());
+        jTable1.setModel(mtlt);
+    }//GEN-LAST:event_btnDodajLokacijuActionPerformed
+
+    private void btnDodajSCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDodajSCActionPerformed
+        DijalogSC dsc = new DijalogSC(this, true, null);
+        dsc.setVisible(true);
+        popuniComboSC();
+    }//GEN-LAST:event_btnDodajSCActionPerformed
+
+    private void btnIzmeniSCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzmeniSCActionPerformed
+        DijalogSC dsc = new DijalogSC(this, true, (SportskiCentar) comboSC.getSelectedItem());
+        dsc.setVisible(true);
+        popuniComboSC();
+    }//GEN-LAST:event_btnIzmeniSCActionPerformed
 
     /**
      * @param args the command line arguments
@@ -209,12 +354,22 @@ public class FormaTakmicenje extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDodaj1;
+    private javax.swing.JButton btnDodajLokaciju;
+    private javax.swing.JButton btnDodajSC;
     private javax.swing.JButton btnIzmeni1;
+    private javax.swing.JButton btnIzmeniSC;
     private javax.swing.JButton btnObrisi1;
+    private javax.swing.JButton btnObrisiSC;
+    private javax.swing.JComboBox<SportskiCentar> comboSC;
     private javax.swing.JComboBox<Takmicenje> comboTakmicenje;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 
     private void popuniComboTakmicenja() {
@@ -222,6 +377,14 @@ public class FormaTakmicenje extends javax.swing.JFrame {
         List<Takmicenje> lt = Kontroler.getInstance().vratiTakmicenja();
         for (Takmicenje t : lt) {
             comboTakmicenje.addItem(t);
+        }
+    }
+    
+    private void popuniComboSC() {
+        comboSC.removeAllItems();
+        List<SportskiCentar> sc = Kontroler.getInstance().vratiCentre();
+        for (SportskiCentar centar : sc) {
+            comboSC.addItem(centar);
         }
     }
 }

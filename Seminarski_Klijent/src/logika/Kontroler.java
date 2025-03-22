@@ -190,4 +190,42 @@ public class Kontroler {
         sndr.salji(req);
         rcv.primi();
     }
+
+    public List<SportskiCentar> vratiCentre() {
+        Zahtev req = new Zahtev(Operacija.VRATI_CENTRE, null);
+        sndr.salji(req);
+        Odgovor o = (Odgovor) rcv.primi();
+        return (List<SportskiCentar>) o.getOdg();
+    }
+
+    public void izbrisiCentar(SportskiCentar sc) {
+        Zahtev req = new Zahtev(Operacija.IZBRISI_CENTAR, sc);
+        sndr.salji(req);
+        rcv.primi();
+    }
+
+    public List<LokacijeTakmicenja> vratiLokTakm() {
+        Zahtev req = new Zahtev(Operacija.VRATI_LOKTAKM, null);
+        sndr.salji(req);
+        Odgovor o = (Odgovor) rcv.primi();
+        return (List<LokacijeTakmicenja>) o.getOdg();
+    }
+
+    public void dodajLokTakm(LokacijeTakmicenja lt) {
+        Zahtev req = new Zahtev(Operacija.DODAJ_LOKTAKM, lt);
+        sndr.salji(req);
+        rcv.primi();
+    }
+
+    public void dodajSC(SportskiCentar sc) {
+        Zahtev req = new Zahtev(Operacija.DODAJ_SC, sc);
+        sndr.salji(req);
+        rcv.primi();
+    }
+
+    public void izmeniSC(SportskiCentar sc) {
+        Zahtev req = new Zahtev(Operacija.IZMENI_SC, sc);
+        sndr.salji(req);
+        rcv.primi();
+    }
 }

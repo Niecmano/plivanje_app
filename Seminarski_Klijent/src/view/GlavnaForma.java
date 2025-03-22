@@ -31,9 +31,10 @@ public class GlavnaForma extends javax.swing.JFrame {
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenu4 = new javax.swing.JMenu();
         meniTakm = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
         meniPK = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        meniPrijave = new javax.swing.JMenuItem();
 
         jRadioButtonMenuItem1.setSelected(true);
         jRadioButtonMenuItem1.setText("jRadioButtonMenuItem1");
@@ -54,7 +55,7 @@ public class GlavnaForma extends javax.swing.JFrame {
             .addGap(0, 362, Short.MAX_VALUE)
         );
 
-        jMenu4.setText("Takmičenja/Klubovi");
+        jMenu4.setText("Takmičenja");
         jMenu4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         meniTakm.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -66,6 +67,11 @@ public class GlavnaForma extends javax.swing.JFrame {
         });
         jMenu4.add(meniTakm);
 
+        jMenuBar2.add(jMenu4);
+
+        jMenu3.setText("Klubovi");
+        jMenu3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
         meniPK.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         meniPK.setText("Plivacki klubovi");
         meniPK.addActionListener(new java.awt.event.ActionListener() {
@@ -73,21 +79,21 @@ public class GlavnaForma extends javax.swing.JFrame {
                 meniPKActionPerformed(evt);
             }
         });
-        jMenu4.add(meniPK);
+        jMenu3.add(meniPK);
 
-        jMenuBar2.add(jMenu4);
+        jMenuBar2.add(jMenu3);
 
         jMenu1.setText("Prijave");
         jMenu1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
-        jMenuItem1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jMenuItem1.setText("Evidencije prijava");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        meniPrijave.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        meniPrijave.setText("Evidencije prijava");
+        meniPrijave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                meniPrijaveActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        jMenu1.add(meniPrijave);
 
         jMenuBar2.add(jMenu1);
 
@@ -117,19 +123,20 @@ public class GlavnaForma extends javax.swing.JFrame {
         pkf.setVisible(true);
     }//GEN-LAST:event_meniPKActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void meniPrijaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_meniPrijaveActionPerformed
         FormaPrijave fp = new FormaPrijave();
         fp.setVisible(true);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_meniPrijaveActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar2;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
     private javax.swing.JMenuItem meniPK;
+    private javax.swing.JMenuItem meniPrijave;
     private javax.swing.JMenuItem meniTakm;
     // End of variables declaration//GEN-END:variables
 }

@@ -263,6 +263,60 @@ public class Server {
                             o = new Odgovor(null, e);
                         }
                         break;
+                    case VRATI_CENTRE:
+                        try {
+                            SOVratiListuSC so = new SOVratiListuSC();
+                            so.sablonIzvrsavanja(new SportskiCentar(),false);
+                            o = new Odgovor(so.getCs(), null);
+                        } catch (Exception e) {
+                            o = new Odgovor(null, e);
+                        }
+                        break;
+                    case IZBRISI_CENTAR:
+                        try {
+                            SOIzbrisiSC so = new SOIzbrisiSC();
+                            so.sablonIzvrsavanja((SportskiCentar)req.getArgum(),null);
+                            o = new Odgovor(null, null);  
+                        } catch (Exception e) {
+                            o = new Odgovor(null, e); 
+                        }
+                        break;
+                    case VRATI_LOKTAKM:
+                        try {
+                            SOVratiListuLokTakm so = new SOVratiListuLokTakm();
+                            so.sablonIzvrsavanja(new LokacijeTakmicenja(),false);
+                            o = new Odgovor(so.getLts(), null);
+                        } catch (Exception e) {
+                            o = new Odgovor(null, e);
+                        }
+                        break;
+                    case DODAJ_LOKTAKM:
+                        try {
+                            SODodajLokTakm so = new SODodajLokTakm();
+                            so.sablonIzvrsavanja((LokacijeTakmicenja)req.getArgum(),null);
+                            o = new Odgovor(null, null);  
+                        } catch (Exception e) {
+                            o = new Odgovor(null, e); 
+                        }
+                        break;
+                    case DODAJ_SC:
+                        try {
+                            SODodajSC so = new SODodajSC();
+                            so.sablonIzvrsavanja((SportskiCentar) req.getArgum(), null);
+                            o = new Odgovor(null, null);  
+                        } catch (Exception e) {
+                            o = new Odgovor(null, e);
+                        }
+                        break;
+                    case IZMENI_SC:
+                        try {
+                            SOPromeniSC so = new SOPromeniSC();
+                            so.sablonIzvrsavanja((SportskiCentar) req.getArgum(), null);
+                            o = new Odgovor(null, null);  
+                        } catch (Exception e) {
+                            o = new Odgovor(null, e);
+                        }
+                        break;
                     default:
                         throw new RuntimeException("Operacija ne postoji");
                 }

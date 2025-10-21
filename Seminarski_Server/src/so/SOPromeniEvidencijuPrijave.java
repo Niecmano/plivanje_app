@@ -7,6 +7,8 @@ package so;
 import baza.DBBroker;
 import domen.OpstiDomenskiObjekat;
 import domen.EvidencijaPrijave;
+import domen.StavkaEvidencijePrijave;
+import java.util.List;
 
 /**
  *
@@ -21,5 +23,14 @@ public class SOPromeniEvidencijuPrijave extends OpstaSO {
     @Override
     public void izvrsavanje(OpstiDomenskiObjekat odo, Object o) throws Exception {
         DBBroker.getInstance().update(odo);
+        Object[] liste = (Object[]) o;
+        List<StavkaEvidencijePrijave> dodate = (List<StavkaEvidencijePrijave>) liste[0];
+        List<StavkaEvidencijePrijave> obrisane = (List<StavkaEvidencijePrijave>) liste[1];
+        for (StavkaEvidencijePrijave ukl : obrisane) {
+            DBBroker.getInstance().delete(ukl);
+        }
+        for (StavkaEvidencijePrijave nova : dodate) {
+            DBBroker.getInstance().insert(nova);
+        }
     }
 }

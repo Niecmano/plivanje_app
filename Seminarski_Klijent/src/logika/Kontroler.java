@@ -154,14 +154,16 @@ public class Kontroler {
         return (List<EvidencijaPrijave>) odg.getOdg();
     }
 
-    public void dodajPrijavu(EvidencijaPrijave ep) {
-        Zahtev req = new Zahtev(Operacija.DODAJ_PRIJAVU, ep);
+    public void dodajPrijavu(EvidencijaPrijave ep,List<StavkaEvidencijePrijave> sep) {
+        Object[] ags = {ep,sep};
+        Zahtev req = new Zahtev(Operacija.DODAJ_PRIJAVU, ags);
         sndr.salji(req);
         rcv.primi();
     }
 
-    public void azurirajPrijavu(EvidencijaPrijave ep) {
-        Zahtev req = new Zahtev(Operacija.IZMENI_PRIJAVU, ep);
+    public void azurirajPrijavu(EvidencijaPrijave ep, List<StavkaEvidencijePrijave> dodate, List<StavkaEvidencijePrijave> obrisane) {
+        Object[] ags = {ep,dodate,obrisane};
+        Zahtev req = new Zahtev(Operacija.IZMENI_PRIJAVU, ags);
         sndr.salji(req);
         rcv.primi();
     }
@@ -171,24 +173,6 @@ public class Kontroler {
         sndr.salji(req);
         Odgovor o = (Odgovor) rcv.primi();
         return (List<StavkaEvidencijePrijave>) o.getOdg();
-    }
-
-    public void izbrisiStavku(StavkaEvidencijePrijave st) {
-        Zahtev req = new Zahtev(Operacija.IZBRISI_STAVKU, st);
-        sndr.salji(req);
-        rcv.primi();
-    }
-
-    public void dodajStavku(StavkaEvidencijePrijave st) {
-        Zahtev req = new Zahtev(Operacija.DODAJ_STAVKU, st);
-        sndr.salji(req);
-        rcv.primi();
-    }
-
-    public void izmeniStavku(StavkaEvidencijePrijave st) {
-        Zahtev req = new Zahtev(Operacija.IZMENI_STAVKU, st);
-        sndr.salji(req);
-        rcv.primi();
     }
 
     public List<SportskiCentar> vratiCentre() {

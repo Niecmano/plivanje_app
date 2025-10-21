@@ -5,15 +5,18 @@
 package so;
 
 import baza.DBBroker;
-import domen.OpstiDomenskiObjekat;
 import domen.StavkaEvidencijePrijave;
+import domen.OpstiDomenskiObjekat;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  *
  * @author Nemanja
  */
-public class SOPromeniStavkuEvidencije extends OpstaSO{
-
+public class SOVratiListuStavkiEvidencije extends OpstaSO{
+    private LinkedList<StavkaEvidencijePrijave> stavke;
+    
     @Override
     public void proveraIspravnosti(OpstiDomenskiObjekat odo) throws Exception {
         if(!(odo instanceof StavkaEvidencijePrijave)) throw new Exception("Objekat nije instanca klase StavkaEvidencijePrijave!");
@@ -21,6 +24,11 @@ public class SOPromeniStavkuEvidencije extends OpstaSO{
 
     @Override
     public void izvrsavanje(OpstiDomenskiObjekat odo, Object o) throws Exception {
-        DBBroker.getInstance().update(odo);
+        List<OpstiDomenskiObjekat> lst = DBBroker.getInstance().select(odo,(boolean) o);
+        stavke=(LinkedList<StavkaEvidencijePrijave>)(LinkedList<?>)lst;
     }
-}  
+    
+    public LinkedList<StavkaEvidencijePrijave> getStavke(){
+        return stavke;
+    }
+}

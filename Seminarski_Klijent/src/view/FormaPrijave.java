@@ -78,7 +78,7 @@ public class FormaPrijave extends javax.swing.JFrame {
 
         btnDodaj.setBackground(new java.awt.Color(255, 204, 0));
         btnDodaj.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnDodaj.setText("Kreiraj prijavu");
+        btnDodaj.setText("Dodaj prijavu");
         btnDodaj.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDodajActionPerformed(evt);
@@ -124,7 +124,7 @@ public class FormaPrijave extends javax.swing.JFrame {
 
         btnAzuriraj.setBackground(new java.awt.Color(255, 204, 0));
         btnAzuriraj.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnAzuriraj.setText("Ažuriraj prijavu");
+        btnAzuriraj.setText("Izmeni prijavu");
         btnAzuriraj.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAzurirajActionPerformed(evt);
@@ -209,15 +209,16 @@ public class FormaPrijave extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDodajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDodajActionPerformed
-        DijalogPrijava dp = new DijalogPrijava(this, rootPaneCheckingEnabled, null);
+        FormaStavkePrijave dp = new FormaStavkePrijave(null,this);
         dp.setVisible(true);
-        osveziTabeluPrijave();
     }//GEN-LAST:event_btnDodajActionPerformed
 
     private void btnFiltrirajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltrirajActionPerformed
         mtp = new ModelTabelePrijave
         (kontroler.filtrirajPrijave(comboKlub.getSelectedItem(),comboTakmicenje.getSelectedItem()));
         jTable2.setModel(mtp);
+        JOptionPane.showMessageDialog(this,"Sistem je našao evidencije prijava po zadatim kriterijumima.",
+                "Filtriranje uspesno",JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnFiltrirajActionPerformed
 
     private void btnPrijavaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrijavaActionPerformed
@@ -228,8 +229,13 @@ public class FormaPrijave extends javax.swing.JFrame {
             return;
         }
         EvidencijaPrijave ep = mtp.get(izbor);
-        FormaStavkePrijave fsp = new FormaStavkePrijave(ep);
-        fsp.setVisible(true);
+        FormaStavkePrijave fsp = new FormaStavkePrijave(ep,this);
+        JOptionPane.showMessageDialog(this,"Sistem je učitao evidenciju prijave",
+                "Evidencija učitana",JOptionPane.INFORMATION_MESSAGE);
+        fsp.btnAzuriraj.setVisible(false);
+        fsp.btnDodaj1.setVisible(false);
+        fsp.btnObrisi1.setVisible(false);
+        fsp.setVisible(true);      
     }//GEN-LAST:event_btnPrijavaActionPerformed
 
     private void btnObrisi2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrisi2ActionPerformed
@@ -242,6 +248,8 @@ public class FormaPrijave extends javax.swing.JFrame {
         EvidencijaPrijave ep = mtp.get(izbor);
         kontroler.izbrisiPrijavu(ep.getIdPrijave());
         osveziTabeluPrijave();
+        JOptionPane.showMessageDialog(this,"Sistem je obrisao evidenciju prijave.",
+                "Brisanje uspešno",JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnObrisi2ActionPerformed
 
     private void btnAzurirajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAzurirajActionPerformed
@@ -252,9 +260,8 @@ public class FormaPrijave extends javax.swing.JFrame {
             return;
         }
         EvidencijaPrijave ep = mtp.get(izbor);
-        DijalogPrijava dp = new DijalogPrijava(this, rootPaneCheckingEnabled, ep);
-        dp.setVisible(true);
-        osveziTabeluPrijave();
+        FormaStavkePrijave fsp = new FormaStavkePrijave(ep,this);
+        fsp.setVisible(true);
     }//GEN-LAST:event_btnAzurirajActionPerformed
 
     /**
@@ -308,7 +315,7 @@ public class FormaPrijave extends javax.swing.JFrame {
     private javax.swing.JTable jTable2;
     // End of variables declaration//GEN-END:variables
 
-    private void osveziTabeluPrijave() {
+    public void osveziTabeluPrijave() {
         mtp = new ModelTabelePrijave(kontroler.vratiPrijave());
         jTable2.setModel(mtp);
     }

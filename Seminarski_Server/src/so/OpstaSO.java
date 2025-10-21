@@ -22,6 +22,7 @@ public abstract class OpstaSO {
             izvrsavanje(ado, o);
             commit();
         }catch(Exception e){
+            System.out.println(e);
             rollback();
             throw e;
         }

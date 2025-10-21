@@ -19,18 +19,11 @@ public class DijalogStavka extends javax.swing.JDialog {
     private static StavkaEvidencijePrijave st;  
     private EvidencijaPrijave ep; 
     
-    public DijalogStavka(java.awt.Frame parent, boolean modal, StavkaEvidencijePrijave st, EvidencijaPrijave ep) {
+    public DijalogStavka(java.awt.Frame parent, boolean modal, EvidencijaPrijave ep) {
         super(parent, modal);
         initComponents();
         this.ep=ep;
         popuniComboTakmicar();
-        if(st!=null){
-            this.st = st;
-            btnDodaj1.setVisible(false);
-            comboDisciplina.setSelectedItem(st.getDisciplina());
-            comboTakmicar.setSelectedItem(st.getTakmicar());
-        }
-        else btnAzuriraj.setVisible(false);
     }
 
     /**
@@ -49,7 +42,6 @@ public class DijalogStavka extends javax.swing.JDialog {
         comboDisciplina = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         comboTakmicar = new javax.swing.JComboBox<>();
-        btnAzuriraj = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -57,7 +49,7 @@ public class DijalogStavka extends javax.swing.JDialog {
 
         btnDodaj1.setBackground(new java.awt.Color(255, 204, 0));
         btnDodaj1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnDodaj1.setText("Kreiraj stavku");
+        btnDodaj1.setText("Dodaj stavku");
         btnDodaj1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDodaj1ActionPerformed(evt);
@@ -83,15 +75,6 @@ public class DijalogStavka extends javax.swing.JDialog {
 
         comboTakmicar.setToolTipText("");
 
-        btnAzuriraj.setBackground(new java.awt.Color(255, 204, 0));
-        btnAzuriraj.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnAzuriraj.setText("Ažuriraj stavku");
-        btnAzuriraj.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAzurirajActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -104,9 +87,7 @@ public class DijalogStavka extends javax.swing.JDialog {
                         .addGap(18, 18, 18)
                         .addComponent(comboDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnDodaj1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnAzuriraj, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnDodaj1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(27, 27, 27)
                         .addComponent(btnOdustani1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -129,8 +110,7 @@ public class DijalogStavka extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnOdustani1)
-                    .addComponent(btnDodaj1)
-                    .addComponent(btnAzuriraj))
+                    .addComponent(btnDodaj1))
                 .addGap(48, 48, 48))
         );
 
@@ -151,7 +131,7 @@ public class DijalogStavka extends javax.swing.JDialog {
     private void btnDodaj1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDodaj1ActionPerformed
           StavkaEvidencijePrijave sep = new StavkaEvidencijePrijave(ep, 0L, 
                   (Disciplina)comboDisciplina.getSelectedItem(), (Takmicar)comboTakmicar.getSelectedItem());
-          Kontroler.getInstance().dodajStavku(sep);
+          FormaStavkePrijave.dodajUTabelu(sep);
         JOptionPane.showMessageDialog(this, "Uspesno ste dodali stavku", "Dodavanje uspesno", JOptionPane.INFORMATION_MESSAGE);
         this.dispose(); 
     }//GEN-LAST:event_btnDodaj1ActionPerformed
@@ -160,17 +140,7 @@ public class DijalogStavka extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_btnOdustani1ActionPerformed
 
-    private void btnAzurirajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAzurirajActionPerformed
-          st.setDisciplina((Disciplina)comboDisciplina.getSelectedItem());
-          st.setTakmicar((Takmicar)comboTakmicar.getSelectedItem());
-        Kontroler.getInstance().izmeniStavku(st);
-        JOptionPane.showMessageDialog(this, "Uspesno ste izmenili stavku", "Ažuriranje uspesno", JOptionPane.INFORMATION_MESSAGE);
-        this.dispose();
-
-    }//GEN-LAST:event_btnAzurirajActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAzuriraj;
     private javax.swing.JButton btnDodaj1;
     private javax.swing.JButton btnOdustani1;
     private javax.swing.JComboBox<String> comboDisciplina;

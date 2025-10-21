@@ -33,7 +33,7 @@ public class DBBroker {
             String upit = "SELECT * FROM " + opstiDO.nazivTabele()+ " " + opstiDO.kraciNazivTabele()
                     + " " + opstiDO.joinDeo()+" "+opstiDO.uslov();
             if(filter==true) upit += opstiDO.filter();
-            System.out.println(upit);
+//            System.out.println(upit);
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery(upit);
             return opstiDO.vratiListuObj(rs);
@@ -49,7 +49,6 @@ public class DBBroker {
             System.out.println(upit);
             Statement st = conn.createStatement();
             st.executeUpdate(upit);
-            //int rez se moze izvuci i vratiti odg. boolean vred.
         } catch (SQLException ex) {
             System.out.println(ex);
         }
@@ -61,7 +60,6 @@ public class DBBroker {
             System.out.println(upit);
             Statement st = conn.createStatement();
             st.executeUpdate(upit);
-            //int rez se moze izvuci i vratiti odg. boolean vred.
         } catch (SQLException ex) {
             System.out.println(ex);
         }
@@ -73,7 +71,6 @@ public class DBBroker {
             System.out.println(upit);
             Statement st = conn.createStatement();
             st.executeUpdate(upit);
-            //int rez se moze izvuci i vratiti odg. boolean vred.
         } catch (SQLException ex) {
             System.out.println(ex);
         }

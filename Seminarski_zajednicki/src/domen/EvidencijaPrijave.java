@@ -117,7 +117,7 @@ public class EvidencijaPrijave extends OpstiDomenskiObjekat{
 
     @Override
     public String vrednostiUbacivanje() {
-        return "0,"+brNastupa+",'"+new java.sql.Date(datumEvid.getTime())+"',"+klub.getIdKluba()+","+tak.getIdTakmicenja();
+        return getIdPrijave()+","+brNastupa+",'"+new java.sql.Date(datumEvid.getTime())+"',"+klub.getIdKluba()+","+tak.getIdTakmicenja();
     }
 
     @Override

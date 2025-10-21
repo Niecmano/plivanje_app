@@ -5,6 +5,10 @@
 package view;
 
 import domen.*;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
 import javax.swing.JOptionPane;
 import logika.Kontroler;
 import tablemodels.ModelTabeleStavke;
@@ -15,18 +19,33 @@ import tablemodels.ModelTabeleStavke;
  */
 public class FormaStavkePrijave extends javax.swing.JFrame {
 
-    private static EvidencijaPrijave ep;
+    private FormaPrijave fp;
+    private EvidencijaPrijave ep;
     private static ModelTabeleStavke mts;
+    
+    private boolean azur = false;
+    private List<StavkaEvidencijePrijave> dodate = new LinkedList<>();
+    private List<StavkaEvidencijePrijave> obrisane = new LinkedList<>();
+    private static StavkaEvidencijePrijave pom;
+        
     /**
      * Creates new form FormaStavkePrijave
      */
-    public FormaStavkePrijave(EvidencijaPrijave ep) {
+    public FormaStavkePrijave(EvidencijaPrijave ep, FormaPrijave fp) {
         initComponents();
-        this.ep = ep;
-        lblKlub.setText("Prijava kluba "+ep.getKlub());
-        lblTakm.setText("za takmičenje "+ep.getTak());
-        mts = new ModelTabeleStavke(Kontroler.getInstance().vratiStavkePrijave(ep));
-        jTable2.setModel(mts);
+        this.fp=fp;
+        popuniComboKlubovi();
+        popuniComboTakmicenja();
+        if (ep != null) {
+            this.ep = ep;
+            comboKlub.setSelectedItem(ep.getKlub());
+            comboTakmicenje.setSelectedItem(ep.getTak());
+            mts = new ModelTabeleStavke(Kontroler.getInstance().vratiStavkePrijave(ep));
+            jTable2.setModel(mts);
+            btnSacuvaj.setVisible(false); 
+            this.azur=true;
+        }
+        else btnAzuriraj.setVisible(false);
     }
 
     /**
@@ -39,20 +58,20 @@ public class FormaStavkePrijave extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        lblTakm = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         btnObrisi1 = new javax.swing.JButton();
         btnDodaj1 = new javax.swing.JButton();
-        btnIzmeni1 = new javax.swing.JButton();
-        lblKlub = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        comboTakmicenje = new javax.swing.JComboBox<>();
+        jLabel8 = new javax.swing.JLabel();
+        comboKlub = new javax.swing.JComboBox<>();
+        btnSacuvaj = new javax.swing.JButton();
+        btnAzuriraj = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 202));
-
-        lblTakm.setFont(new java.awt.Font("Segoe Print", 1, 24)); // NOI18N
-        lblTakm.setText(" ");
 
         jTable2.setBackground(new java.awt.Color(255, 227, 100));
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
@@ -88,17 +107,31 @@ public class FormaStavkePrijave extends javax.swing.JFrame {
             }
         });
 
-        btnIzmeni1.setBackground(new java.awt.Color(255, 204, 0));
-        btnIzmeni1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnIzmeni1.setText("Izmeni stavku");
-        btnIzmeni1.addActionListener(new java.awt.event.ActionListener() {
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel5.setText("Takmičenje:");
+
+        comboTakmicenje.setToolTipText("");
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel8.setText("Klub");
+
+        btnSacuvaj.setBackground(new java.awt.Color(255, 204, 0));
+        btnSacuvaj.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnSacuvaj.setText("Sačuvaj evidenciju prijave");
+        btnSacuvaj.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnIzmeni1ActionPerformed(evt);
+                btnSacuvajActionPerformed(evt);
             }
         });
 
-        lblKlub.setFont(new java.awt.Font("Segoe Print", 1, 24)); // NOI18N
-        lblKlub.setText(" ");
+        btnAzuriraj.setBackground(new java.awt.Color(255, 204, 0));
+        btnAzuriraj.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnAzuriraj.setText("Ažuriraj evidenciju prijave");
+        btnAzuriraj.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAzurirajActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -106,34 +139,61 @@ public class FormaStavkePrijave extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(38, 38, 38)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 523, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblTakm)
-                    .addComponent(lblKlub)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 523, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnIzmeni1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnObrisi1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDodaj1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(btnObrisi1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnDodaj1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnSacuvaj, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(45, 45, 45)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addGap(18, 18, 18)
+                        .addComponent(comboTakmicenje, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addGap(18, 18, 18)
+                        .addComponent(comboKlub, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(574, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addContainerGap(583, Short.MAX_VALUE)
+                    .addComponent(btnAzuriraj, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(16, 16, 16)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(46, 46, 46)
-                .addComponent(lblKlub)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblTakm)
-                .addGap(37, 37, 37)
+                .addGap(88, 88, 88)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(comboKlub, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(comboTakmicenje, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(40, 40, 40)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(62, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(46, 46, 46)
                         .addComponent(btnObrisi1)
-                        .addGap(29, 29, 29)
-                        .addComponent(btnIzmeni1)
-                        .addGap(31, 31, 31)
-                        .addComponent(btnDodaj1))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(54, Short.MAX_VALUE))
+                        .addGap(41, 41, 41)
+                        .addComponent(btnDodaj1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSacuvaj)
+                        .addGap(44, 44, 44))))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addContainerGap(487, Short.MAX_VALUE)
+                    .addComponent(btnAzuriraj)
+                    .addGap(5, 5, 5)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -152,44 +212,78 @@ public class FormaStavkePrijave extends javax.swing.JFrame {
 
     private void btnObrisi1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrisi1ActionPerformed
         int izbor = jTable2.getSelectedRow();
-        if(izbor==-1){
-            JOptionPane.showMessageDialog(this,"Niste izabrali nijednu stavku!", "Greska", JOptionPane.ERROR_MESSAGE);
-            return;
+        if (izbor == -1) {
+            JOptionPane.showMessageDialog(this, "Niste izabrali nijednu stavku!", "Greska", JOptionPane.ERROR_MESSAGE);
         }
-        Kontroler.getInstance().izbrisiStavku(mts.get(izbor));
-        osveziTabeluStavke();
+        StavkaEvidencijePrijave step = mts.get(izbor);
+        obrisiIzTabele(step);
+        jTable2.setModel(mts);
+        if(azur) obrisane.add(step);
     }//GEN-LAST:event_btnObrisi1ActionPerformed
 
     private void btnDodaj1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDodaj1ActionPerformed
-        DijalogStavka ds = new DijalogStavka(this, rootPaneCheckingEnabled, null, ep);
+        if(ep==null) ep = new EvidencijaPrijave(50L + (long) (new Random().nextDouble() * (95000L - 50L + 1)), new Date(), (Takmicenje) comboTakmicenje.getSelectedItem(),(PlivackiKlub)comboKlub.getSelectedItem());
+        DijalogStavka ds = new DijalogStavka(this, rootPaneCheckingEnabled, ep);
         ds.setVisible(true);
-        osveziTabeluStavke();
+        jTable2.setModel(mts);
+        if(azur) dodate.add(pom);
     }//GEN-LAST:event_btnDodaj1ActionPerformed
 
-    private void btnIzmeni1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzmeni1ActionPerformed
-        int izbor = jTable2.getSelectedRow();
-        if(izbor==-1){
-            JOptionPane.showMessageDialog(this, "Niste izabrali nijednu stavku!", "Greška", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        DijalogStavka ds = new DijalogStavka(this, rootPaneCheckingEnabled, mts.get(izbor), ep);
-        ds.setVisible(true);
-        osveziTabeluStavke();
-    }//GEN-LAST:event_btnIzmeni1ActionPerformed
+    private void btnSacuvajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSacuvajActionPerformed
+        Kontroler.getInstance().dodajPrijavu(ep,mts.getStavke());
+        fp.osveziTabeluPrijave();
+        this.dispose();
+    }//GEN-LAST:event_btnSacuvajActionPerformed
 
-    private void osveziTabeluStavke(){
-        mts = new ModelTabeleStavke(Kontroler.getInstance().vratiStavkePrijave(ep));
-        jTable2.setModel(mts);
+    private void btnAzurirajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAzurirajActionPerformed
+        Kontroler.getInstance().azurirajPrijavu(ep,dodate,obrisane);
+        this.dispose();
+    }//GEN-LAST:event_btnAzurirajActionPerformed
+
+    private void popuniComboKlubovi() {
+        List<PlivackiKlub> pks = Kontroler.getInstance().vratiKlubove();
+        for (PlivackiKlub pk : pks) {
+            comboKlub.addItem(pk);
+        }
+    }
+
+    private void popuniComboTakmicenja() {
+        List<Takmicenje> taks = Kontroler.getInstance().vratiTakmicenja();
+        for (Takmicenje t : taks) {
+            comboTakmicenje.addItem(t);
+        }
+    }
+    
+    public static void dodajUTabelu(StavkaEvidencijePrijave sep){
+        pom=sep;
+        if(mts==null){
+            mts = new ModelTabeleStavke(new LinkedList<>());
+        }
+        List<StavkaEvidencijePrijave> lstst = mts.getStavke();
+        lstst.add(sep);
+        mts.setStavke(lstst);
+        mts.fireTableDataChanged();
+    }
+    
+    public void obrisiIzTabele(StavkaEvidencijePrijave step) {
+        List<StavkaEvidencijePrijave> lstst = mts.getStavke();
+        lstst.remove(step);
+        mts.setStavke(lstst);
+        mts.fireTableDataChanged();
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnDodaj1;
-    private javax.swing.JButton btnIzmeni1;
-    private javax.swing.JButton btnObrisi1;
+    public javax.swing.JButton btnAzuriraj;
+    public javax.swing.JButton btnDodaj1;
+    public javax.swing.JButton btnObrisi1;
+    private javax.swing.JButton btnSacuvaj;
+    private javax.swing.JComboBox<PlivackiKlub> comboKlub;
+    private javax.swing.JComboBox<Takmicenje> comboTakmicenje;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable2;
-    private javax.swing.JLabel lblKlub;
-    private javax.swing.JLabel lblTakm;
     // End of variables declaration//GEN-END:variables
+
 }

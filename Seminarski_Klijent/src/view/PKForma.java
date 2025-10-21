@@ -18,6 +18,7 @@ public class PKForma extends javax.swing.JFrame {
 
     private static Kontroler kontroler;
     private ModelTabelePK mtpk;
+
     /**
      * Creates new form PKForma
      */
@@ -222,30 +223,32 @@ public class PKForma extends javax.swing.JFrame {
 
     private void btnObrisiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrisiActionPerformed
         int izbor = jTable1.getSelectedRow();
-        if(izbor == -1){
-            JOptionPane.showMessageDialog(this, "Niste izabrali nijedan klub!", 
+        if (izbor == -1) {
+            JOptionPane.showMessageDialog(this, "Niste izabrali nijedan klub!",
                     "Greska", JOptionPane.ERROR_MESSAGE);
             return;
         }
         PlivackiKlub sc = mtpk.get(izbor);
         //neadekvantno kad se odradi filter: PlivackiKlub sc = kontroler.vratiKlubove().get(izbor);
-        
-        int potvrda = JOptionPane.showConfirmDialog(this, 
-        "Da li ste sigurni da želite da obrišete klub: " + sc.getNazivKluba() + "?", 
-        "Potvrda brisanja", 
-        JOptionPane.YES_NO_OPTION, 
-        JOptionPane.WARNING_MESSAGE);
-        if (potvrda != JOptionPane.YES_OPTION)  return;
-        
-        kontroler.izbrisiKlubIzBaze(sc.getIdKluba());    
+
+        int potvrda = JOptionPane.showConfirmDialog(this,
+                "Da li ste sigurni da želite da obrišete klub: " + sc.getNazivKluba() + "?",
+                "Potvrda brisanja",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE);
+        if (potvrda != JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        kontroler.izbrisiKlubIzBaze(sc.getIdKluba());
         mtpk = new ModelTabelePK(kontroler.vratiKlubove());
         jTable1.setModel(mtpk);
     }//GEN-LAST:event_btnObrisiActionPerformed
 
     private void btnIzmeniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzmeniActionPerformed
         int izbor = jTable1.getSelectedRow();
-        if(izbor == -1){
-            JOptionPane.showMessageDialog(this, "Niste izabrali nijedan klub!", 
+        if (izbor == -1) {
+            JOptionPane.showMessageDialog(this, "Niste izabrali nijedan klub!",
                     "Greska", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -256,14 +259,16 @@ public class PKForma extends javax.swing.JFrame {
     }//GEN-LAST:event_btnIzmeniActionPerformed
 
     private void btnFiltrirajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltrirajActionPerformed
-        mtpk = new ModelTabelePK(Kontroler.getInstance().filtrirajKlubove(tfKlubFilter.getText(),(Mesto) comboMesto.getSelectedItem()));
+        mtpk = new ModelTabelePK(Kontroler.getInstance().filtrirajKlubove(tfKlubFilter.getText(), (Mesto) comboMesto.getSelectedItem()));
         jTable1.setModel(mtpk);
+        JOptionPane.showMessageDialog(this, "Sistem je nasao klubove po zadatim kriterijumima.",
+                "Greska", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnFiltrirajActionPerformed
 
     private void btnTakmicariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTakmicariActionPerformed
         int izbor = jTable1.getSelectedRow();
-        if(izbor == -1){
-            JOptionPane.showMessageDialog(this, "Niste izabrali nijedan klub!", 
+        if (izbor == -1) {
+            JOptionPane.showMessageDialog(this, "Niste izabrali nijedan klub!",
                     "Greska", JOptionPane.ERROR_MESSAGE);
             return;
         }

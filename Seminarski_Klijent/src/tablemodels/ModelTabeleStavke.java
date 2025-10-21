@@ -56,4 +56,13 @@ public class ModelTabeleStavke extends AbstractTableModel{
         if(index<0) throw new ArrayIndexOutOfBoundsException();
         return stavke.get(index);
     }
+
+    public List<StavkaEvidencijePrijave> getStavke() {
+        return stavke;
+    }
+
+    public void setStavke(List<StavkaEvidencijePrijave> stavke) {
+        this.stavke = stavke;
+    }
+    
 }

@@ -28,6 +28,7 @@ public class GlavnaForma extends javax.swing.JFrame {
 
         jRadioButtonMenuItem1 = new javax.swing.JRadioButtonMenuItem();
         jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenu4 = new javax.swing.JMenu();
         meniTakm = new javax.swing.JMenuItem();
@@ -44,15 +45,18 @@ public class GlavnaForma extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 202));
 
+        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Nemanja\\Desktop\\FON\\SOFTVERI\\swim.jpg")); // NOI18N
+        jLabel1.setText("jLabel1");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 564, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 564, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 362, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 362, Short.MAX_VALUE)
         );
 
         jMenu4.setText("Takmičenja");
@@ -129,6 +133,7 @@ public class GlavnaForma extends javax.swing.JFrame {
     }//GEN-LAST:event_meniPrijaveActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
